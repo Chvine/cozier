@@ -468,12 +468,14 @@ header.scrolled {
 .about-video-container video {
   width: 100%;
   aspect-ratio: 16/9;
+  object-fit: cover;
   background: var(--sand);
   display: block;
   border: 1px solid var(--line);
   cursor: pointer;
   transition: box-shadow 0.25s ease;
 }
+
 .about-video-container video:hover {
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
 }

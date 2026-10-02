@@ -98,10 +98,16 @@
       renderLocalOrders();
     }
 
-    if (hash !== 'about') {
-      var vid = $('#aboutVid');
+    var vid = $('#aboutVid');
+    if (hash === 'about') {
+      if (vid) {
+        vid.muted = true;
+        vid.play().catch(function () {});
+      }
+    } else {
       if (vid && !vid.paused) vid.pause();
     }
+
 
     closeMobileMenu();
   }
@@ -750,26 +756,29 @@
     if (abLead) abLead.textContent = S.about.lead;
     if (abBody) abBody.textContent = S.about.body;
 
-    /* About Video ("Life in motion" section) - Center & Play on Hover */
+    /* About Video ("Life in motion" section) - Center & Auto-play (no picture/poster) */
     var videoContainer = $('#aboutVideoContainer');
     if (videoContainer && S.about && S.about.video) {
       var v = S.about.video;
-      videoContainer.innerHTML = '<video id="aboutVid" src="' + v.src + '" poster="' + (v.poster || '') + '" muted loop playsinline preload="auto"></video>'
+      videoContainer.innerHTML = '<video id="aboutVid" src="' + v.src + '" autoplay muted loop playsinline preload="auto"></video>'
         + (v.caption ? '<div class="about-video-caption">' + v.caption + '</div>' : '');
 
       var vid = $('#aboutVid');
       if (vid) {
-        // Play immediately when user hovers into the video
-        vid.addEventListener('mouseenter', function () {
+        vid.muted = true;
+        // Attempt immediate playback if currently viewing about page
+        if ((location.hash || '').slice(1) === 'about') {
           vid.play().catch(function () {});
+        }
+
+        // Retry playback once canplay event fires (reliable on mobile)
+        vid.addEventListener('canplay', function () {
+          if ((location.hash || '').slice(1) === 'about' && vid.paused) {
+            vid.play().catch(function () {});
+          }
         });
 
-        // Pause when mouse leaves
-        vid.addEventListener('mouseleave', function () {
-          vid.pause();
-        });
-
-        // Click toggles play/pause or unmutes
+        // Click toggles play/pause
         vid.addEventListener('click', function () {
           if (vid.paused) {
             vid.play().catch(function () {});
@@ -779,6 +788,7 @@
         });
       }
     }
+
 
     /* Standard Dark Band (Screenshot 3 layout) */
     var stdTag  = $('#stdTag');

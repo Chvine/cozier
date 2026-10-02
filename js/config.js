@@ -51,9 +51,9 @@ window.SITE = {
     /* Video in About page ("Life in motion" section) */
     video: {
       src: 'video/brand.mp4',
-      poster: 'images/about-1.jpg',
       caption: 'A day in Cozier - Cagayan de Oro'
     },
+
 
     /* Dark Standard Section (Matches reference screenshot 3 exactly) */
     standard: {
