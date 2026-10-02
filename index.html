@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Cozier – Soft clothes for slow days</title>
+<meta name="description" content="Cozier is a small independent label from Cagayan de Oro. Comfort-first tees, every piece under ₱500.">
+<meta property="og:title" content="Cozier – Soft clothes for slow days">
+<meta property="og:description" content="Comfort-first tees from Cagayan de Oro, every piece under ₱500.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ── DESIGN SYSTEM & TOKENS ────────────────────────── */
+:root {
+  --bg: #e8ebee;
+  --ink: #172026;
+  --mute: #5f6b78;
+  --line: #c4cbd2;
+  --moss: #56633f;
+  --sand: #d9b88f;
+  --navy: #243040;
+  --navy-line: rgba(255, 255, 255, 0.16);
+  --navy-text: #eef1f4;
+  --navy-mute: #aab4c0;
+  --paper: #f4f6f7;
+  --white: #ffffff;
+
+  --serif: "Newsreader", Georgia, serif;
+  --sans: "Manrope", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ── RESET & BASE TYPOGRAPHY ───────────────────────── */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+img, video { display: block; max-width: 100%; }
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+button, a {
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+:focus-visible { outline: 2px solid var(--moss); outline-offset: 3px; }
+
+/* ── COMMON UTILITIES ──────────────────────────────── */
+.wrap { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+.view { display: none; }
+.view.on { display: block; }
+
+h1, h2, h3 { font-family: var(--serif); font-weight: 400; letter-spacing: -0.025em; line-height: 1; }
+h1 { font-size: clamp(48px, 7.5vw, 88px); line-height: 0.94; }
+h2 { font-size: clamp(30px, 4vw, 46px); line-height: 1.05; }
+h3 { font-size: 20px; }
+
+.moss { color: var(--moss); }
+.mute { color: var(--mute); }
+.sm { font-size: 13px; }
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+  font-weight: 600;
+}
+
+.btn {
+  background: var(--ink);
+  color: #fff;
+  padding: 13px 24px;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  display: inline-block;
+  text-align: center;
+  border: 1px solid var(--ink);
+  transition: opacity 0.15s ease, background 0.15s ease;
+  cursor: pointer;
+}
+.btn:hover { background: #26333f; }
+.btn.ghost { background: none; color: var(--ink); border-color: var(--ink); }
+.btn.ghost:hover { background: var(--ink); color: #fff; }
+.btn.block { width: 100%; }
+
+.field {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 11px 14px;
+  font-size: 14px;
+  width: 100%;
+  color: var(--ink);
+}
+.field:focus { outline: none; border-color: var(--moss); }
+label { display: block; font-weight: 500; font-size: 13px; margin-top: 18px; }
+label .field { margin-top: 6px; }
+textarea.field { min-height: 110px; resize: vertical; }
+
+.note { min-height: 20px; font-size: 13px; margin: 10px 0 0; }
+.ok { color: var(--moss); }
+.bad { color: #b3402f; }
+
+/* ── REDESIGNED NAVIGATION BAR ─────────────────────── */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(232, 235, 238, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(196, 203, 210, 0.85);
+  transition: box-shadow 0.25s ease, background 0.25s ease;
+  padding-top: env(safe-area-inset-top, 0px);
+}
+header.scrolled {
+  box-shadow: 0 4px 20px rgba(23, 32, 38, 0.05);
+  background: rgba(232, 235, 238, 0.98);
+}
+
+.nav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: 64px;
+  gap: 16px;
+}
+
+/* Column 1: Desktop Nav Links */
+.nav-col-left {
+  display: flex;
+  align-items: center;
+}
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+.nav-link {
+  color: var(--ink);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.75;
+  transition: opacity 0.2s ease;
+  padding: 6px 0;
+}
+.nav-link:hover {
+  opacity: 1;
+}
+.nav-link.on {
+  opacity: 1;
+  text-decoration: underline;
+  text-underline-offset: 7px;
+  text-decoration-thickness: 1.5px;
+}
+
+/* Minimal Menu Text Button (Visible on mobile <= 860px) */
+.menu-toggle-btn {
+  display: none;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  padding: 8px 0;
+  font-family: var(--sans);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink);
+  transition: opacity 0.15s ease;
+}
+.menu-toggle-btn:hover {
+  opacity: 0.7;
+}
+
+/* Column 2: True Centered Logo */
+.nav-col-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.logo {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink);
+  line-height: 1;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+.logo:hover {
+  opacity: 0.75;
+}
+
+/* Column 3: Right Controls (Location & Bag) */
+.nav-col-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+}
+.nav-loc {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+  font-weight: 500;
+}
+.nav-loc-sep {
+  color: var(--line);
+  font-size: 11px;
+}
+.bag-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+.bag-btn:hover {
+  border-color: var(--line);
+  background: rgba(244, 246, 247, 0.8);
+}
+.bag-icon {
+  width: 14px;
+  height: 14px;
+  stroke: var(--ink);
+  stroke-width: 1.8;
+  fill: none;
+}
+.bag-count {
+  background: var(--navy);
+  color: #fff;
+  border-radius: 99px;
+  min-width: 20px;
+  height: 20px;
+  font-size: 11px;
+  line-height: 20px;
+  text-align: center;
+  padding: 0 5px;
+  transition: transform 0.15s ease;
+}
+.bag-count.bump {
+  transform: scale(1.3);
+}
+
+/* ── MINIMAL MOBILE DROPDOWN MENU (MATCHES USER SCREENSHOT) ── */
+.mobile-menu {
+  display: none;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  padding: 0 0 8px;
+  animation: menuDrop 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.mobile-menu.open {
+  display: block;
+}
+@keyframes menuDrop {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.mobile-menu-item,
+.mobile-menu-item:hover,
+.mobile-menu-item:focus,
+.mobile-menu-item:active,
+.mobile-menu-item.on {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  text-decoration: none !important;
+  outline: none;
+  transition: color 0.15s ease;
+}
+.mobile-menu-item * {
+  text-decoration: none !important;
+}
+.mobile-menu-item:first-child {
+  border-top: 1px solid var(--line);
+}
+.mobile-menu-item .arr-icon {
+  width: 16px;
+  height: 16px;
+  stroke: var(--ink);
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  text-decoration: none !important;
+  border: 0 !important;
+  outline: 0 !important;
+  transition: transform 0.15s ease, stroke 0.15s ease;
+}
+.mobile-menu-item:hover, .mobile-menu-item.on {
+  color: var(--moss);
+}
+.mobile-menu-item:hover .arr-icon, .mobile-menu-item.on .arr-icon {
+  stroke: var(--moss);
+  transform: translateX(4px);
+}
+
+/* ── SHOP VIEW ─────────────────────────────────────── */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 40px;
+  padding: 56px 0 32px;
+  flex-wrap: wrap;
+}
+.hero-left { flex: 1; min-width: 300px; }
+.hero-desc {
+  max-width: 360px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.hero-line {
+  border: 0;
+  border-top: 1px solid var(--line);
+  margin: 0;
+}
+
+/* Tools bar */
+.tools {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+}
+.tools .field { width: auto; }
+.tools .s { flex: 1; min-width: 180px; }
+.chip {
+  border: 1px solid var(--line);
+  padding: 8px 16px;
+  background: var(--paper);
+  font-size: 13px;
+  transition: all 0.15s ease;
+}
+.chip[aria-pressed="true"] {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+/* 3-Column Product Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 44px 24px;
+  padding: 36px 0 80px;
+}
+.card { display: flex; flex-direction: column; }
+.card .card-img {
+  position: relative;
+  background: var(--sand);
+  aspect-ratio: 4/5;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  cursor: pointer;
+}
+.card img { width: 100%; height: 100%; object-fit: cover; }
+.card .card-quick {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: 0.2s ease;
+}
+.card:hover .card-quick,
+.card:focus-within .card-quick {
+  opacity: 1;
+  transform: none;
+}
+@media (hover: none) {
+  .card .card-quick { opacity: 1; transform: none; }
+}
+.card .meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-top: 14px;
+  font-weight: 500;
+  font-size: 15px;
+}
+.card .sub {
+  font-size: 13px;
+  color: var(--mute);
+  margin-top: 3px;
+}
+.none { padding: 60px 0; color: var(--mute); }
+
+/* ── ABOUT VIEW ────────────────────────────────────── */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 64px;
+  padding: 72px 0 56px;
+  align-items: start;
+}
+.lead {
+  font-family: var(--serif);
+  font-size: clamp(26px, 3.2vw, 36px);
+  line-height: 1.25;
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+/* About Video Showcase ("Life in motion") */
+.about-video-section {
+  padding: 56px 0 72px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+.about-video-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.about-video-container video {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--sand);
+  display: block;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  transition: box-shadow 0.25s ease;
+}
+.about-video-container video:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+.about-video-caption {
+  font-size: 13px;
+  color: var(--mute);
+  margin-top: 14px;
+  text-align: center;
+}
+
+/* Standard Dark Band (Screenshot 3) */
+.band {
+  background: var(--navy);
+  color: var(--navy-text);
+  padding: 72px 0 80px;
+}
+.band-cols {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
+  margin-top: 36px;
+}
+.band-divider {
+  border: 0;
+  border-top: 1px solid var(--navy-line);
+  margin-bottom: 24px;
+}
+.band .num {
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--navy-mute);
+  margin-bottom: 18px;
+  font-weight: 500;
+}
+.band h3 {
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0;
+  margin-bottom: 8px;
+}
+.band p {
+  color: var(--navy-mute);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ── TRACK ORDER / DASHBOARD VIEW ─────────────────── */
+.dash-layout {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 56px;
+  padding: 64px 0 80px;
+  align-items: start;
+}
+.order-card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 28px;
+  margin-top: 28px;
+  display: none;
+}
+.order-card.visible { display: block; }
+.order-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.status-tag {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 5px 12px;
+  border: 1px solid currentColor;
+}
+.status-tag.received { color: var(--moss); }
+.status-tag.processing { color: #9c6c22; }
+.status-tag.shipped { color: var(--navy); }
+.status-tag.delivered { color: var(--ink); background: var(--line); }
+
+/* Timeline progress visualizer */
+.tracker-steps {
+  display: flex;
+  align-items: flex-start;
+  margin: 24px 0 24px;
+}
+.tracker-step {
+  flex: 1;
+  text-align: center;
+  position: relative;
+}
+.tracker-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: var(--line);
+  z-index: 0;
+}
+.tracker-step.done::after { background: var(--moss); }
+.tracker-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  background: var(--paper);
+  margin: 0 auto 6px;
+  position: relative;
+  z-index: 1;
+}
+.tracker-step.done .tracker-dot { border-color: var(--moss); background: var(--moss); }
+.tracker-step.active .tracker-dot { border-color: var(--ink); background: var(--ink); box-shadow: 0 0 0 3px rgba(23,32,38,0.12); }
+.tracker-label {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mute);
+  font-weight: 500;
+}
+.tracker-step.done .tracker-label,
+.tracker-step.active .tracker-label { color: var(--ink); font-weight: 600; }
+
+.order-list-item {
+  padding: 16px 20px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+.order-list-item:hover { border-color: var(--ink); }
+
+/* ── CONTACT VIEW ──────────────────────────────────── */
+.contact-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  padding: 72px 0 80px;
+}
+
+/* ── NEWSLETTER ────────────────────────────────────── */
+.quiet {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  background: var(--paper);
+  padding: 36px 32px;
+  margin-bottom: 56px;
+}
+.quiet form {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  min-width: 260px;
+  max-width: 420px;
+}
+
+/* ── FOOTER ────────────────────────────────────────── */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 48px 0 28px;
+}
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.footer-tag {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink);
+  font-weight: 600;
+}
+.footer-desc {
+  color: var(--mute);
+  font-size: 13px;
+  line-height: 1.7;
+  margin-top: 8px;
+}
+.footer-links-wrap {
+  display: flex;
+  gap: 56px;
+}
+.footer-links-col a {
+  display: block;
+  color: var(--ink);
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.big-wordmark {
+  font-family: var(--serif);
+  font-size: clamp(80px, 18vw, 210px);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  margin: 48px 0 24px;
+  color: var(--ink);
+  user-select: none;
+}
+
+/* ── PRODUCT DIALOG ────────────────────────────────── */
+dialog {
+  border: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  max-width: 880px;
+  width: calc(100% - 32px);
+  max-height: 92vh;
+  overflow: auto;
+}
+dialog::backdrop { background: rgba(10, 14, 18, 0.5); }
+.qv { display: grid; grid-template-columns: 1fr 1fr; }
+.qv-pic {
+  background: var(--sand);
+  display: grid;
+  place-items: center;
+  min-height: 360px;
+  overflow: hidden;
+}
+.qv-pic img { width: 100%; height: 100%; object-fit: cover; }
+.qv-info { padding: 36px 32px; }
+.x { float: right; font-size: 26px; line-height: 1; color: var(--mute); }
+.x:hover { color: var(--ink); }
+.sizes { display: flex; gap: 8px; margin: 10px 0; }
+.sizes button {
+  border: 1px solid var(--line);
+  background: var(--paper);
+  width: 48px;
+  height: 42px;
+  font-size: 13px;
+}
+.sizes button[aria-pressed="true"] {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+table { border-collapse: collapse; width: 100%; font-size: 13px; margin: 8px 0 20px; }
+td, th { border-bottom: 1px solid var(--line); padding: 6px 4px; text-align: left; }
+
+/* ── DRAWER (BAG & CHECKOUT) ───────────────────────── */
+.scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 14, 18, 0.5);
+  z-index: 40;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.scrim.open { opacity: 1; pointer-events: auto; }
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(460px, 100%);
+  background: var(--paper);
+  z-index: 50;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+}
+.drawer.open { transform: none; }
+
+.dh {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--line);
+}
+.dh h3 { font-size: 26px; font-weight: 400; }
+.db { flex: 1; overflow-y: auto; padding: 0 24px; }
+.df { padding: 20px 24px; border-top: 1px solid var(--line); }
+
+.ship { padding: 16px 0 4px; font-size: 13px; }
+.bar { height: 4px; background: var(--line); margin-top: 8px; }
+.bar i { display: block; height: 100%; background: var(--moss); transition: width 0.3s; }
+
+.line {
+  display: grid;
+  grid-template-columns: 76px 1fr auto;
+  gap: 14px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+.thumb {
+  background: var(--sand);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+.qty { display: inline-flex; border: 1px solid var(--line); }
+.qty button { width: 30px; height: 30px; font-size: 15px; }
+.qty span { width: 30px; text-align: center; line-height: 30px; font-size: 13px; }
+.link { text-decoration: underline; color: var(--mute); font-size: 13px; cursor: pointer; }
+.link:hover { color: var(--ink); }
+
+.row { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 14px; }
+.row.t { font-weight: 600; font-size: 16px; margin-top: 8px; color: var(--ink); }
+.promo { display: flex; gap: 8px; margin: 12px 0; }
+.pay { display: flex; gap: 10px; margin-top: 8px; }
+.pay label {
+  flex: 1;
+  margin: 0;
+  border: 1px solid var(--line);
+  padding: 10px 12px;
+  font-weight: 400;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── RESPONSIVE ADAPTATIONS (iOS & Android) ────────── */
+header {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+footer {
+  padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Prevent iOS Safari auto-zoom on input focus */
+@media (max-width: 768px) {
+  input, select, textarea, .field {
+    font-size: 16px !important;
+  }
+}
+
+/* Tablet & Mobile Screens (<= 860px) */
+@media (max-width: 860px) {
+  .desktop-nav, .nav-loc, .nav-loc-sep {
+    display: none;
+  }
+  .menu-toggle-btn {
+    display: inline-flex;
+  }
+  .nav {
+    height: 56px;
+    grid-template-columns: 1fr auto 1fr;
+  }
+  .logo {
+    font-size: 22px;
+  }
+  .bag-btn {
+    padding: 6px 8px;
+  }
+  .grid { grid-template-columns: repeat(2, 1fr); gap: 36px 20px; }
+  .split, .dash-layout, .contact-split, .band-cols {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .qv { grid-template-columns: 1fr; }
+  .qv-pic { min-height: 280px; max-height: 320px; }
+}
+
+/* Mobile Phones (<= 640px: iPhone, Galaxy, Pixel) */
+@media (max-width: 640px) {
+  .wrap { padding: 0 18px; }
+
+  /* Hero Section */
+  .hero {
+    padding: 36px 0 20px;
+    gap: 16px;
+  }
+  .hero h1 {
+    font-size: clamp(38px, 11vw, 56px);
+    line-height: 0.96;
+  }
+  .hero-desc {
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+
+  /* Search & Tools */
+  .tools {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+  .tools .field.s {
+    width: 100%;
+    min-width: 100%;
+  }
+  .tools select.field {
+    width: 100%;
+  }
+
+  /* Single Column Product Grid on Mobile */
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 24px 0 60px;
+  }
+  .card .card-img {
+    aspect-ratio: 4/5;
+  }
+  /* On touch devices make action button clear and accessible */
+  @media (hover: none) {
+    .card .card-quick {
+      opacity: 1;
+      transform: none;
+      position: static;
+      margin-top: 10px;
+    }
+  }
+
+  /* Touch-friendly sizes */
+  .btn, .bag-btn {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sizes button {
+    height: 46px;
+    min-width: 44px;
+    font-size: 14px;
+  }
+  .qty button {
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+  }
+  .qty span {
+    width: 40px;
+    line-height: 42px;
+    font-size: 14px;
+  }
+
+  /* About Video Section */
+  .about-video-section {
+    padding: 36px 0 48px;
+  }
+  .about-video-container video {
+    border-radius: 0;
+  }
+
+  /* Dialog on Mobile */
+  dialog {
+    width: calc(100% - 24px);
+    max-width: 420px;
+    max-height: 88dvh;
+    margin: auto;
+  }
+  .qv-info {
+    padding: 20px 18px 24px;
+  }
+  .x {
+    font-size: 32px;
+    padding: 4px;
+    line-height: 0.8;
+  }
+
+  /* Drawer on Mobile */
+  .drawer {
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+  .dh {
+    padding: 16px 18px;
+  }
+  .db {
+    padding: 0 18px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .df {
+    padding: 16px 18px calc(16px + env(safe-area-inset-bottom, 0px));
+  }
+  .line {
+    grid-template-columns: 60px 1fr auto;
+    gap: 12px;
+  }
+  .pay {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Newsletter banner */
+  .quiet {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 24px 18px;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .quiet form {
+    flex-direction: column;
+    max-width: 100%;
+  }
+
+  /* Footer on Mobile */
+  footer {
+    padding: 36px 0 calc(24px + env(safe-area-inset-bottom, 0px));
+  }
+  .footer-top {
+    flex-direction: column;
+    gap: 28px;
+  }
+  .footer-links-wrap {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .big-wordmark {
+    font-size: clamp(48px, 17vw, 120px);
+    margin: 28px 0 16px;
+    word-break: break-word;
+  }
+}
+
+/* Smallest Screens (<= 360px: Galaxy Fold outer, compact phones) */
+@media (max-width: 360px) {
+  .wrap { padding: 0 14px; }
+  .hero h1 { font-size: 34px; }
+  .nav-left a { font-size: 10px; letter-spacing: 0.05em; }
+  .logo { font-size: 19px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ── MINIMAL NAVIGATION BAR (MATCHES USER SCREENSHOT) ── -->
+<header id="hdr">
+  <div class="wrap nav">
+    <!-- Left: Minimal Text Menu Button & Desktop Nav -->
+    <div class="nav-col-left">
+      <button class="menu-toggle-btn" id="menuBtn" aria-label="Toggle navigation" aria-expanded="false">MENU</button>
+      <nav class="desktop-nav">
+        <a href="#shop"    class="nav-link" data-nav="shop">Shop</a>
+        <a href="#about"   class="nav-link" data-nav="about">About</a>
+        <a href="#track"   class="nav-link" data-nav="track">Track order</a>
+        <a href="#contact" class="nav-link" data-nav="contact">Contact</a>
+      </nav>
+    </div>
+
+    <!-- Center: Centered Logo -->
+    <div class="nav-col-center">
+      <a class="logo" href="#shop" data-cfg="name">Cozier</a>
+    </div>
+
+    <!-- Right: Location & Bag -->
+    <div class="nav-col-right">
+      <span class="nav-loc" data-cfg="location">Cagayan de Oro / PH</span>
+      <span class="nav-loc-sep">•</span>
+      <button class="bag-btn" id="openBag" aria-label="Open shopping bag">
+        <svg class="bag-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span>Bag</span>
+        <span class="bag-count" id="count">0</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Minimal Inline Dropdown Menu (Screenshot Style) -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="wrap">
+      <a href="#shop" class="mobile-menu-item" data-nav="shop">
+        <span>Shop</span>
+        <svg class="arr-icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </a>
+      <a href="#about" class="mobile-menu-item" data-nav="about">
+        <span>About</span>
+        <svg class="arr-icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </a>
+      <a href="#track" class="mobile-menu-item" data-nav="track">
+        <span>Track order</span>
+        <svg class="arr-icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </a>
+      <a href="#contact" class="mobile-menu-item" data-nav="contact">
+        <span>Contact</span>
+        <svg class="arr-icon" viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+
+<section class="view" id="v-shop">
+  <div class="wrap">
+
+    <div class="hero">
+      <div class="hero-left">
+        <div class="eyebrow" id="heroTag" style="margin-bottom:18px">THE COLLECTION / 05 PIECES</div>
+        <h1 id="heroHeading">Everyday,<br><span class="moss">considered.</span></h1>
+      </div>
+      <p class="hero-desc" id="heroDesc">Comfort-first essentials with enough point of view to make them yours.</p>
+    </div>
+    <hr class="hero-line">
+
+
+
+    <!-- 3-Column Products Grid -->
+    <div class="grid" id="grid"></div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     ABOUT VIEW (Screenshot 4 & 3)
+═══════════════════════════════════════════════════════ -->
+<section class="view" id="v-about">
+
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <div class="eyebrow" id="aboutTag" style="margin-bottom:20px">ABOUT / THE BEGINNING</div>
+        <h1 id="aboutHeading">Find your<br><span class="moss">calm.</span></h1>
+      </div>
+      <div>
+        <p class="lead" id="aboutLead">Cozier started with a simple idea: the clothes you live in should feel as good as the life you’re building.</p>
+        <p class="mute" id="aboutBody">We are a small, independent label from Cagayan de Oro making unfussy pieces for warm days, long commutes, quick coffee, and all the in-between. Our references are familiar: the generous hospitality of home, the pace of the city, the quiet confidence of people who know what they like.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Life in Motion: Only the Video -->
+  <div class="wrap about-video-section">
+    <div class="eyebrow" style="margin-bottom:8px">Visual Journal</div>
+    <h2 style="font-size:32px;margin-bottom:24px">Life in motion.</h2>
+    <div class="about-video-container" id="aboutVideoContainer"></div>
+  </div>
+
+  <!-- Standard Dark Band (Matches Screenshot 3) -->
+  <div class="band">
+    <div class="wrap">
+      <div class="band-cols">
+        <!-- Col 1 -->
+        <div>
+          <div class="eyebrow" id="stdTag" style="color:var(--navy-mute);margin-bottom:16px">OUR STANDARD</div>
+          <h2 id="stdHead" style="font-size:36px;margin-bottom:36px">No noise.<br>Just good clothes.</h2>
+          <hr class="band-divider">
+          <div id="stdCol1"></div>
+        </div>
+        <!-- Col 2 -->
+        <div>
+          <hr class="band-divider">
+          <div id="stdCol2"></div>
+        </div>
+        <!-- Col 3 -->
+        <div>
+          <hr class="band-divider">
+          <div id="stdCol3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     TRACK ORDER / DASHBOARD VIEW
+═══════════════════════════════════════════════════════ -->
+<section class="view" id="v-track">
+  <div class="wrap">
+
+    <div class="dash-layout">
+      <!-- Order Lookup & Active Tracker -->
+      <div>
+        <div class="eyebrow" style="margin-bottom:14px">Live Status</div>
+        <h1>Where’s my<br><span class="moss">order?</span></h1>
+        <p class="mute" style="margin-top:16px;max-width:440px">Enter the order number and the mobile number you used at checkout to track real-time fulfillment.</p>
+
+        <form id="trackForm" novalidate style="margin-top:24px">
+          <label>Order number
+            <input class="field" id="trackNo" name="no" placeholder="CZ-123456" required>
+          </label>
+          <label>Mobile number
+            <input class="field" id="trackPh" name="p" type="tel" placeholder="09XX XXX XXXX" required>
+          </label>
+          <p class="note" id="tOut" role="status"></p>
+          <button class="btn" style="margin-top:16px">Check status</button>
+        </form>
+
+        <!-- Dynamic Order Result Dashboard Card -->
+        <div class="order-card" id="orderCard">
+          <div class="order-card-header">
+            <div>
+              <div class="eyebrow">Order Found</div>
+              <div style="font-family:var(--serif);font-size:26px;margin-top:2px" id="cardNo"></div>
+              <div class="mute sm" id="cardDate" style="margin-top:2px"></div>
+            </div>
+            <div class="status-tag" id="cardStatus"></div>
+          </div>
+
+          <!-- Progress timeline -->
+          <div class="tracker-steps" id="trackerSteps"></div>
+
+          <!-- Items list -->
+          <div class="eyebrow" style="margin:20px 0 8px">Items in this order</div>
+          <div id="cardItems"></div>
+
+          <!-- Totals -->
+          <div id="cardTotals" style="margin-top:16px;padding-top:14px;border-top:1px solid var(--line)"></div>
+
+          <!-- Delivery Address -->
+          <div id="cardAddr" style="margin-top:16px;padding-top:14px;border-top:1px solid var(--line)"></div>
+        </div>
+      </div>
+
+      <!-- Recent Orders on This Device -->
+      <div>
+        <div class="eyebrow" style="margin-bottom:14px">Device History</div>
+        <h2 style="font-size:28px;margin-bottom:16px">Recent orders</h2>
+        <p class="mute sm" style="margin-bottom:20px">Orders placed from this browser are stored below for quick one-click tracking.</p>
+        <div id="localOrders"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     CONTACT VIEW
+═══════════════════════════════════════════════════════ -->
+<section class="view" id="v-contact">
+  <div class="wrap">
+    <div class="contact-split">
+      <div>
+        <div class="eyebrow" style="margin-bottom:14px">Get in Touch</div>
+        <h1>Let’s talk<br><span class="moss">comfort.</span></h1>
+        <p class="mute" style="margin-top:20px;max-width:380px">Sizing, an order, or just hello. We reply Monday to Friday, 10am–5pm PHT.</p>
+        <p style="margin-top:28px">
+          <a data-cfg="email" href="#" style="font-weight:600">hello@cozier.ph</a><br>
+          <span class="mute" data-cfg="address">Cagayan de Oro, Philippines</span>
+        </p>
+      </div>
+
+      <form id="msgForm" novalidate>
+        <label>Your name<input class="field" name="name" autocomplete="name"></label>
+        <label>Email<input class="field" name="email" type="email" autocomplete="email"></label>
+        <label>How can we help?<textarea class="field" name="message"></textarea></label>
+        <p class="note" id="mOut" role="status"></p>
+        <button class="btn" style="margin-top:8px">Send message</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ── NEWSLETTER STRIP ───────────────────────────────── -->
+<div class="wrap">
+  <div class="quiet">
+    <div>
+      <h2 style="font-size:28px" id="nlHeadline">Notes from Cozier</h2>
+      <span class="mute sm" id="nlSubline">New pieces and small stories. No inbox clutter.</span>
+    </div>
+    <form id="newsForm" novalidate>
+      <input class="field" name="email" type="email" placeholder="Your email" aria-label="Email">
+      <button class="btn">Join</button>
+    </form>
+  </div>
+</div>
+
+<!-- ── FOOTER (Screenshot 2) ──────────────────────────── -->
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-tag" id="footerTag">A SMALL LABEL FROM CAGAYAN DE ORO</div>
+        <div class="footer-desc" id="footerDesc">Clothes for the parts of the day that matter.<br>Designed with care, priced to be lived in.</div>
+      </div>
+      <div class="footer-links-wrap">
+        <div class="footer-links-col" id="footerLinksCol1"></div>
+        <div class="footer-links-col" id="footerLinksCol2"></div>
+      </div>
+    </div>
+
+    <!-- Massive Wordmark -->
+    <div class="big-wordmark" data-cfg="name">COZIER</div>
+
+    <div class="mute sm" id="copyright"></div>
+  </div>
+</footer>
+
+<!-- ── PRODUCT QUICK VIEW DIALOG ──────────────────────── -->
+<dialog id="qv" aria-label="Product details"></dialog>
+
+<!-- ── SHOPPING BAG / CHECKOUT DRAWER ─────────────────── -->
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Shopping bag">
+  <div class="dh">
+    <h3 id="dT">Shopping bag</h3>
+    <button class="x" id="closeBag" aria-label="Close bag">×</button>
+  </div>
+  <div class="db" id="dB"></div>
+  <div class="df" id="dF"></div>
+</aside>
+
+<!-- ── SCRIPTS (Configuration, Catalog, Application) ─── -->
+<script src="js/config.js"></script>
+<script src="js/products.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
